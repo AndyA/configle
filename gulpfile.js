@@ -1,8 +1,10 @@
 "use strict";
 
+var del = require("del");
 var eslint = require("gulp-eslint");
 var gulp = require("gulp");
 var mocha = require("gulp-mocha");
+var shell = require("gulp-shell");
 
 gulp.task("lint", function() {
   var src = [];
@@ -21,6 +23,14 @@ gulp.task("test", function() {
     .pipe(mocha({
       reporter: "spec"
     }));
+});
+
+gulp.task("docs", shell.task([
+  "node ./node_modules/jsdoc/jsdoc.js -c jsdoc.json -d docs -r"
+]));
+
+gulp.task("clean", function() {
+  del("docs");
 });
 
 gulp.task("default", ["lint", "test"], function() {});

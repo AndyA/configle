@@ -1,0 +1,21 @@
+{
+   "plugins" : [],
+   "source" : {
+      "excludePattern" : "(^|\\/|\\\\)_",
+      "include" : [
+         "index.js",
+         "lib"
+      ],
+      "includePattern" : ".+\\.js(doc)?$"
+   },
+   "tags" : {
+      "allowUnknownTags" : true
+   },
+   "templates" : {
+      "cleverLinks" : false,
+      "default" : {
+         "outputSourceFiles" : true
+      },
+      "monospaceLinks" : false
+   }
+}
