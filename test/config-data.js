@@ -225,6 +225,23 @@ describe("ConfigData", function() {
         .to.throw(Error);
     });
 
+    it("should provide debug for circular refs", function() {
+      expect(function() {
+          ConfigData.expandVars({
+            circle: {
+              a: "${circle.c}",
+              b: "${circle.a}",
+              c: "${circle.b}"
+            }
+          }, {
+            trackRefs: true
+          });
+        })
+        .to.throw(Error,
+          /circle\.[abc] -> circle\.[abc] -> circle\.[abc] -> circle\.[abc]/
+        );
+    });
+
     it("should preserve SmartStrings", function() {
       var smartConfig = SmartString.smarten({
         tmpDir: ".",
