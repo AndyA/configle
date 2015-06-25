@@ -1,4 +1,5 @@
 .*.sw?
 /Session.vim
+/docs/
 /node_modules/
 /squnk/

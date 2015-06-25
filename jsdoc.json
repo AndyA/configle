@@ -4,7 +4,9 @@
       "excludePattern" : "(^|\\/|\\\\)_",
       "include" : [
          "index.js",
-         "lib"
+         "lib",
+         "package.json", 
+         "README.md"
       ],
       "includePattern" : ".+\\.js(doc)?$"
    },
