@@ -15,7 +15,7 @@ describe("Interpolate", function() {
     function makeResolver(dict) {
       return function(key) {
         return dict[key];
-      }
+      };
     }
 
     var look = makeResolver({
@@ -52,6 +52,16 @@ describe("Interpolate", function() {
     it("should map $$ to $", function() {
       expect(interpolate("Worth at least $$1000!"))
         .to.equal("Worth at least $1000!");
+    });
+
+    it("should ignore { at the top level", function() {
+      expect(interpolate("open brace: {"))
+        .to.equal("open brace: {");
+    });
+
+    it("should ignore } at the top level", function() {
+      expect(interpolate("closing brace: }"))
+        .to.equal("closing brace: }");
     });
 
     it("should do recursive interpolation", function() {
