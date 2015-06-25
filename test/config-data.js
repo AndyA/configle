@@ -199,6 +199,22 @@ describe("ConfigData", function() {
 
     });
 
+    it("should resolve process.env", function() {
+      process.env.CONFIGLE_TEST_VAR = "Configle!";
+      expect(ConfigData.expandVars({
+          name: "${CONFIGLE_TEST_VAR}"
+        }, {
+          resolvers: [
+            function(key) {
+              return process.env[key];
+            }
+          ]
+        }))
+        .to.deep.equal({
+          name: "Configle!"
+        });
+    });
+
     it("should throw on circular refs", function() {
       expect(function() {
           ConfigData.expandVars({
