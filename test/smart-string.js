@@ -43,9 +43,11 @@ describe("SmartString", function() {
 
   });
 
+  /* eslint-disable no-unused-expressions */
+
   describe("staySmart", function() {
 
-    function filt(str) {
+    function filt() {
       return "foo";
     }
 
