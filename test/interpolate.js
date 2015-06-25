@@ -22,7 +22,11 @@ describe("Interpolate", function() {
       name: "Andy",
       altName: "Andrew",
       home: "/home/andy",
-      useName: "altName"
+      useName: "altName",
+      data: {
+        an: "Object"
+      },
+      dataField: "data"
     });
 
     var look2 = makeResolver({
@@ -59,6 +63,28 @@ describe("Interpolate", function() {
       expect(interpolate(
           "name: ${name}, desc: ${desc}", look, look2, nf))
         .to.equal("name: Andy, desc: Biffo the bear");
+    });
+
+    it("should return an object for the entire string", function() {
+      expect(interpolate(
+          "${data}", look, nf))
+        .to.deep.equal({
+          an: "Object"
+        });
+    });
+
+    it("should return an object for a recursive lookup", function() {
+      expect(interpolate(
+          "${{dataField}}", look, nf))
+        .to.deep.equal({
+          an: "Object"
+        });
+    });
+
+    it("should stringify embedded objects", function() {
+      expect(interpolate(
+          "data: ${data}", look, nf))
+        .to.deep.equal("data: [object Object]");
     });
 
   });
