@@ -182,14 +182,17 @@ describe("ConfigData", function() {
       expect(ConfigData.expandVars({
           summary: "${details}",
           details: {
-            desc: "It's the details"
+            what: "details",
+            desc: "It's the ${details.what}"
           }
         }))
         .to.deep.equal({
           summary: {
+            what: "details",
             desc: "It's the details"
           },
           details: {
+            what: "details",
             desc: "It's the details"
           }
         });
