@@ -1,5 +1,13 @@
 "use strict";
 
+var _ = require("underscore");
+var deepMerge = require("./lib/deep-merge.js");
+var fs = require("fs");
+var path = require("path");
+
+var MultiString = require("./lib/multi-string.js");
+var SmartString = require("./lib/smart-string.js");
+
 /**
  * Configle config system
  * @module configle
@@ -16,9 +24,9 @@ function Configle() {
 
 }
 
-//var loaders = {
-//  json: JSON.parse
-//};
+var loaders = {
+  json: JSON.parse
+};
 
 /**
  * Load config files from directories at and above the current directory to build
@@ -45,11 +53,76 @@ function Configle() {
  *          - Stop after this number of directory levels have yielded matching
  *            config files. Defaults to unlinited.
  *
+ * @param {Number} [options.smartStrings]
+ *          - Make strings in config into SmartStrings that know about the
+ *            directory from which they were sourced. Defaults to <tt>true</tt>.
+ *
  * @returns {Configle}
  *          - A Configle object
  */
 
 Configle.load = function() {
+  var args = _.toArray(arguments);
+  if (!args.length) {
+    throw new Error("Syntax: Configle.load([<baseName>], [<options>])");
+  }
+  if (_.isString(args[0])) {
+    args[0] = {
+      baseName: args[0]
+    };
+  }
+  args.push({
+    startDir: ".",
+    smartStrings: true
+  });
+  var options = deepMerge.array(args);
+  if (!options.hasOwnProperty("baseName")) {
+    throw new Error("Required option baseName is missing");
+  }
+  var namer = new MultiString(options.baseName);
+  var numFound = 0;
+  var config;
+  var dir = fs.realpathSync(options.startDir);
+  var loaderNames = _.keys(loaders)
+    .sort();
+
+  for (var up = 0; /*lint*/ ; up++) {
+    if ((options.hasOwnProperty("maxUp") && up >= options.maxUp) ||
+      (options.hasOwnProperty("stopAfter") && numFound >= options.stopAfter)) {
+      break;
+    }
+
+    namer.each(function(name) {
+      loaderNames.forEach(function(ext) {
+        var loader = loaders[ext];
+        var confName = ext.length ? name + "." + ext : name;
+        var confFile = path.join(dir, confName);
+        //        console.log("confFile: " + confFile);
+        try {
+          var confData = fs.readFileSync(confFile);
+        } catch (e) {
+          if (e instanceof Error && e.code === "ENOENT") {
+            return;
+          }
+          throw e;
+        }
+
+        var confObject = loader(confData);
+        if (options.smartStrings) {
+          confObject = SmartString.smarten(confObject, dir);
+        }
+        config = deepMerge(config, confObject);
+      });
+
+    });
+    var nextDir = path.dirname(dir);
+    if (nextDir === dir) {
+      break;
+    }
+    dir = nextDir;
+  }
+
+  console.log("config: " + JSON.stringify(config, null, 2));
 
 };
 
@@ -60,11 +133,11 @@ Configle.prototype = {
    *
    * @param {...(string|string[])} path - the configuration path to read from.
    * @returns {Configle|SmartString} - either a subtree of the config or a SmartString
-   *          containing a config item's value.
+   *          containing a config item"s value.
    * @example <caption>Some ways of calling get</caption>
    *
    * // gets a SmartString or Configle
-   * var dir = config.get("baseDir");
+   * var dir = config.get("baseName");
    *
    * // search path
    * var dbHost = config.get("database.(test|default).host");
