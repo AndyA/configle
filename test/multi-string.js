@@ -80,7 +80,7 @@ describe("MultiString", function() {
     var out = [];
     ms.each(function(path) {
       out.push(path);
-      return (stop !== undefined && out.length == stop);
+      return (stop !== undefined && out.length === stop);
     });
     return out;
   }

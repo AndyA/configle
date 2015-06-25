@@ -16,18 +16,42 @@ function Configle() {
 
 }
 
+//var loaders = {
+//  json: JSON.parse
+//};
+
 /**
  * Load config files from directories at and above the current directory to build
  * a merged config.
  *
- * @param {string} [baseName]   - the base name for the config file
- * @param {Object} [options]    - configuration options
- * @param {String} [options.baseName] - the base name may be included as an
- *          option or a parameter.
- * @returns {Configle}          - a Configle object
+ * @param {string} [baseName]
+ *          - The base name for the config file. Processed as a {@link MultiString}
+ *            so patterns such as "config.(local|)" are allowed.
+ *
+ * @param {Object} [options]
+ *          - Configuration options.
+ *
+ * @param {String} [options.baseName]
+ *          - The base name may be included as an option or a parameter.
+ *
+ * @param {String} [options.startDir]
+ *          - The directory to start searching from. Defaults to "."
+ *
+ * @param {Number} [options.maxUp]
+ *          - The maximum number of directories levels to go up.
+ *            Defaults to unlinited.
+ *
+ * @param {Number} [options.stopAfter]
+ *          - Stop after this number of directory levels have yielded matching
+ *            config files. Defaults to unlinited.
+ *
+ * @returns {Configle}
+ *          - A Configle object
  */
 
-Configle.load = function() {};
+Configle.load = function() {
+
+};
 
 Configle.prototype = {
 
