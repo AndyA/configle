@@ -12,16 +12,23 @@ describe("Interpolate", function() {
 
     var interpolate = Interpolate.interpolate;
 
-    var dict = {
+    function makeResolver(dict) {
+      return function(key) {
+        return dict[key];
+      }
+    }
+
+    var look = makeResolver({
       name: "Andy",
       altName: "Andrew",
       home: "/home/andy",
       useName: "altName"
-    };
+    });
 
-    function look(key) {
-      return dict[key];
-    }
+    var look2 = makeResolver({
+      name: "Biffo",
+      desc: "Biffo the bear"
+    });
 
     function nf(key) {
       throw new Error(key + " not found");
@@ -33,7 +40,8 @@ describe("Interpolate", function() {
     });
 
     it("should do simple interpolation", function() {
-      expect(interpolate("Name: ${name}, dir: ${home}", look, nf))
+      expect(interpolate(
+          "Name: ${name}, dir: ${home}", look, nf))
         .to.equal("Name: Andy, dir: /home/andy");
     });
 
@@ -45,6 +53,12 @@ describe("Interpolate", function() {
     it("should do recursive interpolation", function() {
       expect(interpolate("Name: ${{useName}}", look, nf))
         .to.equal("Name: Andrew");
+    });
+
+    it("should try multiple resolvers", function() {
+      expect(interpolate(
+          "name: ${name}, desc: ${desc}", look, look2, nf))
+        .to.equal("name: Andy, desc: Biffo the bear");
     });
 
   });
