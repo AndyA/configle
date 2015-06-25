@@ -233,8 +233,6 @@ describe("ConfigData", function() {
               b: "${circle.a}",
               c: "${circle.b}"
             }
-          }, {
-            trackRefs: true
           });
         })
         .to.throw(Error,
