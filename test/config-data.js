@@ -195,6 +195,16 @@ describe("ConfigData", function() {
 
     });
 
+    it("should throw on circular refs", function() {
+      expect(function() {
+          ConfigData.expandVars({
+            a: "${b}",
+            b: "${a}"
+          });
+        })
+        .to.throw(Error);
+    });
+
 
   });
 
