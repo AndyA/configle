@@ -104,4 +104,98 @@ describe("ConfigData", function() {
 
   });
 
+  describe("expandVars", function() {
+    it("should handle no vars", function() {
+      expect(ConfigData.expandVars({
+          a: "is for apple",
+          b: false,
+          c: null,
+          d: 1.3,
+          e: {},
+          f: []
+        }))
+        .to.deep.equal({
+          a: "is for apple",
+          b: false,
+          c: null,
+          d: 1.3,
+          e: {},
+          f: []
+        });
+    });
+
+    it("should handle simple expansion", function() {
+      expect(ConfigData.expandVars({
+          baseDir: "/tmp",
+          workDir: "${baseDir}/work"
+        }))
+        .to.deep.equal({
+          baseDir: "/tmp",
+          workDir: "/tmp/work"
+        });
+    });
+
+    it("should handle dotted paths", function() {
+      expect(ConfigData.expandVars({
+          dirs: {
+            baseDir: "/tmp",
+            workDir: "${dirs.baseDir}/work"
+          }
+        }))
+        .to.deep.equal({
+          dirs: {
+            baseDir: "/tmp",
+            workDir: "/tmp/work"
+          }
+        });
+    });
+
+    it("should handle deep refs", function() {
+      expect(ConfigData.expandVars({
+          foo: {
+            workBase: "base",
+            stage1: "${foo.workBase}/stage1",
+            stage2: "${foo.stage1}/stage2",
+            desc: "${bar.live}: ${bar.stage3}"
+          },
+          bar: {
+            live: "liveProduction",
+            stage3: "${foo.stage2}/stage3"
+          }
+        }))
+        .to.deep.equal({
+          foo: {
+            workBase: "base",
+            stage1: "base/stage1",
+            stage2: "base/stage1/stage2",
+            desc: "liveProduction: base/stage1/stage2/stage3"
+          },
+          bar: {
+            live: "liveProduction",
+            stage3: "base/stage1/stage2/stage3"
+          }
+        });
+    });
+
+    it("should splice structures", function() {
+      expect(ConfigData.expandVars({
+          summary: "${details}",
+          details: {
+            desc: "It's the details"
+          }
+        }))
+        .to.deep.equal({
+          summary: {
+            desc: "It's the details"
+          },
+          details: {
+            desc: "It's the details"
+          }
+        });
+
+    });
+
+
+  });
+
 });
