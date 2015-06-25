@@ -5,6 +5,7 @@ chai.use(require("chai-subset"));
 var expect = chai.expect;
 
 var ConfigData = require("../lib/config-data.js");
+var SmartString = require("../lib/smart-string.js");
 
 describe("ConfigData", function() {
 
@@ -205,6 +206,17 @@ describe("ConfigData", function() {
         .to.throw(Error);
     });
 
+    it("should preserve SmartStrings", function() {
+      var smartConfig = SmartString.smarten({
+        tmpDir: ".",
+        workDir: "${tmpDir}/work"
+      }, "/tmp");
+      var expConfig = ConfigData.expandVars(smartConfig);
+      expect(expConfig.tmpDir.toPathName())
+        .to.equal("/tmp");
+      expect(expConfig.workDir.toPathName())
+        .to.equal("/tmp/work");
+    });
 
   });
 
