@@ -42,7 +42,7 @@ describe("interpolate", function() {
 
   it("should do simple interpolation", function() {
     expect(interpolate(
-        "Name: ${name}, dir: ${home}", look, nf))
+        "Name: ${name}, dir: ${home}", [look, nf]))
       .to.equal("Name: Andy, dir: /home/andy");
   });
 
@@ -62,19 +62,19 @@ describe("interpolate", function() {
   });
 
   it("should do recursive interpolation", function() {
-    expect(interpolate("Name: ${{useName}}", look, nf))
+    expect(interpolate("Name: ${{useName}}", [look, nf]))
       .to.equal("Name: Andrew");
   });
 
   it("should try multiple resolvers", function() {
     expect(interpolate(
-        "name: ${name}, desc: ${desc}", look, look2, nf))
+        "name: ${name}, desc: ${desc}", [look, look2, nf]))
       .to.equal("name: Andy, desc: Biffo the bear");
   });
 
   it("should return an object for the entire string", function() {
     expect(interpolate(
-        "${data}", look, nf))
+        "${data}", [look, nf]))
       .to.deep.equal({
         an: "Object"
       });
@@ -82,7 +82,7 @@ describe("interpolate", function() {
 
   it("should return an object for a recursive lookup", function() {
     expect(interpolate(
-        "${{dataField}}", look, nf))
+        "${{dataField}}", [look, nf]))
       .to.deep.equal({
         an: "Object"
       });
@@ -90,7 +90,7 @@ describe("interpolate", function() {
 
   it("should stringify embedded objects", function() {
     expect(interpolate(
-        "data: ${data}", look, nf))
+        "data: ${data}", [look, nf]))
       .to.deep.equal("data: [object Object]");
   });
 
