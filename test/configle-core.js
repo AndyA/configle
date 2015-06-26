@@ -35,8 +35,7 @@ describe("Configle core", function() {
     });
 
     cf.options({
-      startDir: "/tmp",
-      smartStrings: false
+      startDir: "/tmp"
     }, {
       expandVars: false
     });
@@ -45,7 +44,6 @@ describe("Configle core", function() {
       expect(cf.getOptions())
         .to.deep.equal({
           startDir: "/tmp",
-          smartStrings: false,
           expandVars: false,
           expandEnv: true,
           allowUndefined: false,
