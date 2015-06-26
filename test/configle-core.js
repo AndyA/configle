@@ -1,4 +1,6 @@
 "use strict";
+
+var path = require("path");
 var chai = require("chai");
 chai.use(require("chai-subset"));
 var expect = chai.expect;
@@ -89,6 +91,44 @@ describe("Configle core", function() {
           }
         });
     });
+  });
+
+  describe("load", function() {
+    var cfgRoot = path.join(__dirname, "data", "root");
+    var cfgStart = path.join(cfgRoot, "home", "me", "projects");
+
+    var cf = new Configle({
+      startDir: cfgStart
+    });
+
+    it("should load config", function() {
+      expect(cf.load("configle.(local|)"))
+        .to.deep.equal({
+          "name": "Projects local config",
+          "vars": {
+            "array": [],
+            "false": false,
+            "null": null,
+            "object": {
+              "false": false,
+              "null": null,
+              "pi": 3.1415,
+              "true": true
+            },
+            "pi": 3.1415,
+            "true": true
+          },
+          "sources": [
+            "projects local",
+            "projects",
+            "home local",
+            "home",
+            "root local",
+            "root"
+          ]
+        });
+    });
+
   });
 
 });

@@ -1,0 +1,9 @@
+{
+   "name" : "Root config",
+   "sources" : [
+      "root"
+   ],
+   "vars" : {
+      "false" : false
+   }
+}

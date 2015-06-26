@@ -1,0 +1,9 @@
+{
+   "name" : "User default config",
+   "sources" : [
+      "home"
+   ],
+   "vars" : {
+      "null" : null
+   }
+}

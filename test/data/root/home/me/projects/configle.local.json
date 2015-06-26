@@ -1,0 +1,9 @@
+{
+   "name" : "Projects local config",
+   "sources" : [
+      "projects local"
+   ],
+   "vars" : {
+      "array" : []
+   }
+}
