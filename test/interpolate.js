@@ -52,6 +52,12 @@ describe("interpolate", function() {
         .to.equal("Worth at least $1000!");
     });
 
+
+    it("should escape $${", function() {
+      expect(interpolate("A variable ref looks like this: $${var}"))
+        .to.equal("A variable ref looks like this: ${var}");
+    });
+
     it("should ignore { at the top level", function() {
       expect(interpolate("open brace: {"))
         .to.equal("open brace: {");
@@ -94,5 +100,55 @@ describe("interpolate", function() {
           "data: ${data}", [look, nf]))
         .to.deep.equal("data: [object Object]");
     });
+  });
+
+  describe("user defined functions", function() {
+
+    var isFunc = /^(\w+)$/;
+
+    function userFuncs(expr, context) {
+
+      if (context.func) {
+        var func = context.func;
+        switch (func.name) {
+          case "length":
+            return func.arg.length;
+          case "double":
+            return func.arg + func.arg;
+        }
+      }
+
+      return undefined;
+    }
+
+    var vars = makeResolver({
+      "v1": "A string of some sort",
+      "v2": 10,
+      "name": "Andy",
+      "vector": [1, 2, 3]
+    });
+
+    it("should call a function", function() {
+      expect(interpolate("${length:123}", [userFuncs, vars]))
+        .to.equal(3);
+    });
+
+    it("should call a function with an expanded arg", function() {
+      expect(interpolate("${length:{v1}}", [userFuncs, vars]))
+        .to.equal("A string of some sort".length);
+    });
+
+    it("should call a function with an object", function() {
+      expect(interpolate("${length:{vector}}", [userFuncs, vars]))
+        .to.equal(3);
+    });
+
+    it("should allow polymorphic functions", function() {
+      expect(interpolate("${double:{name}}", [userFuncs, vars]))
+        .to.equal("AndyAndy");
+      expect(interpolate("${double:{v2}}", [userFuncs, vars]))
+        .to.equal(20);
+    });
+
   });
 });
