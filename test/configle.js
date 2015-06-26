@@ -9,7 +9,14 @@ var Configle = require("../");
 describe("Configle", function() {
 
   it("should handle its static methods", function() {
-    ["load", "deepMerge", "interpolate"].forEach(function(method) {
+    ["load"].forEach(function(method) {
+      expect(Configle)
+        .itself.to.respondTo(method);
+    });
+  });
+
+  it("should handle its utility static methods", function() {
+    ["deepMerge", "interpolate"].forEach(function(method) {
       expect(Configle)
         .itself.to.respondTo(method);
     });

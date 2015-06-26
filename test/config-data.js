@@ -204,11 +204,7 @@ describe("ConfigData", function() {
       expect(ConfigData.expandVars({
           name: "${CONFIGLE_TEST_VAR}"
         }, {
-          resolvers: [
-            function(key) {
-              return process.env[key];
-            }
-          ]
+          expandEnv: true
         }))
         .to.deep.equal({
           name: "Configle!"
