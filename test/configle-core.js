@@ -16,8 +16,8 @@ describe("Configle core", function() {
     });
 
     it("should handle its methods", function() {
-      ["get", "options", "getOptions", "addConfig", "loadFile",
-        "load"
+      ["get", "options", "getOptions",
+        "addConfig", "loadFile", "load"
       ]
       .forEach(
         function(method) {
@@ -59,7 +59,38 @@ describe("Configle core", function() {
         })
         .to.throw(Error);
     });
+  });
 
+  describe("config", function() {
+    var cf = new Configle({
+      smartStrings: false
+    });
+
+    cf.addConfig({
+      db: {
+        test: "mysql://root@localhost/test",
+        live: "mysql://root@localhost/live"
+      }
+    }, "/home/me");
+
+    cf.addConfig({
+      db: {
+        test: "mysql://root@db000/test",
+        stage: "mysql://root@db000/stage",
+        live: "mysql://root@db000/live"
+      }
+    }, "/tmp");
+
+    it("should have config", function() {
+      expect(cf.get())
+        .to.deep.equal({
+          db: {
+            test: "mysql://root@localhost/test",
+            stage: "mysql://root@db000/stage",
+            live: "mysql://root@localhost/live"
+          }
+        });
+    });
   });
 
 });
