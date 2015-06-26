@@ -7,6 +7,12 @@ var expect = chai.expect;
 
 var Configle = require("../lib/configle-core.js");
 
+function toLocalPath(pathName) {
+  return pathName.split("/")
+    .join(require("path")
+      .sep);
+}
+
 describe("Configle core", function() {
 
   describe("interface", function() {
@@ -110,9 +116,11 @@ describe("Configle core", function() {
       expect(cf.get())
         .to.deep.equal({
           inHomeMe: "home_me",
-          fromHomeYou: "Path: /home/you/home_you",
+          fromHomeYou: "Path: " +
+            toLocalPath("/home/you/home_you"),
           inHomeYou: "home_you",
-          fromHomeMe: "Path: /home/me/home_me"
+          fromHomeMe: "Path: " +
+            toLocalPath("/home/me/home_me")
         });
     });
 
