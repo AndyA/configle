@@ -242,9 +242,9 @@ describe("ConfigData", function() {
         workDir: "${tmpDir}/work"
       }, "/tmp");
       var expConfig = ConfigData.expandVars(smartConfig);
-      expect(expConfig.tmpDir.toPathName())
+      expect(expConfig.tmpDir.toPathname())
         .to.equal("/tmp");
-      expect(expConfig.workDir.toPathName())
+      expect(expConfig.workDir.toPathname())
         .to.equal("/tmp/work");
     });
 

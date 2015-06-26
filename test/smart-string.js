@@ -15,8 +15,8 @@ describe("SmartString", function() {
       expect(smartStr)
         .to.be.instanceOf(String);
       expect(smartStr)
-        .to.respondTo("toPathName");
-      expect(smartStr.toPathName())
+        .to.respondTo("toPathname");
+      expect(smartStr.toPathname())
         .to.equal("/tmp/mystuff");
     });
 
@@ -25,8 +25,8 @@ describe("SmartString", function() {
       expect(smartStr)
         .to.be.instanceOf(String);
       expect(smartStr)
-        .to.respondTo("toPathName");
-      expect(smartStr.toPathName())
+        .to.respondTo("toPathname");
+      expect(smartStr.toPathname())
         .to.equal("/usr/bin/node");
     });
 
@@ -36,8 +36,8 @@ describe("SmartString", function() {
       expect(anotherStr)
         .to.be.instanceOf(String);
       expect(anotherStr)
-        .to.respondTo("toPathName");
-      expect(anotherStr.toPathName())
+        .to.respondTo("toPathname");
+      expect(anotherStr.toPathname())
         .to.equal("/tmp/mystuff");
     });
 
@@ -63,7 +63,7 @@ describe("SmartString", function() {
       var filtStr = SmartString.staySmart(smartStr, filt);
       expect(SmartString.isSmart(filtStr))
         .to.be.true;
-      expect(filtStr.toPathName())
+      expect(filtStr.toPathname())
         .to.equal("/tmp/foo");
     });
   });
@@ -82,7 +82,7 @@ describe("SmartString", function() {
       var filtStr = SmartString.setString(smartStr, "foo");
       expect(SmartString.isSmart(filtStr))
         .to.be.true;
-      expect(filtStr.toPathName())
+      expect(filtStr.toPathname())
         .to.equal("/tmp/foo");
     });
 
