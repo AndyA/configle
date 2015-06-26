@@ -6,11 +6,11 @@ var expect = chai.expect;
 
 var SmartString = require("../lib/smart-string.js");
 
-//function toLocalPath(pathName) {
-//  return pathName.split("/")
-//    .join(require("path")
-//      .sep);
-//}
+function toLocalPath(pathName) {
+ return pathName.split("/")
+   .join(require("path")
+     .sep);
+}
 
 describe("SmartString", function() {
 
@@ -23,7 +23,7 @@ describe("SmartString", function() {
       expect(smartStr)
         .to.respondTo("toPathname");
       expect(smartStr.toPathname())
-        .to.equal("/tmp/mystuff");
+        .to.equal(toLocalPath("/tmp/mystuff"));
     });
 
     it("should smarten an absolute path", function() {
@@ -44,7 +44,7 @@ describe("SmartString", function() {
       expect(anotherStr)
         .to.respondTo("toPathname");
       expect(anotherStr.toPathname())
-        .to.equal("/tmp/mystuff");
+        .to.equal(toLocalPath("/tmp/mystuff"));
     });
 
   });
@@ -70,7 +70,7 @@ describe("SmartString", function() {
       expect(SmartString.isSmart(filtStr))
         .to.be.true;
       expect(filtStr.toPathname())
-        .to.equal("/tmp/foo");
+        .to.equal(toLocalPath("/tmp/foo"));
     });
   });
 
@@ -89,7 +89,7 @@ describe("SmartString", function() {
       expect(SmartString.isSmart(filtStr))
         .to.be.true;
       expect(filtStr.toPathname())
-        .to.equal("/tmp/foo");
+        .to.equal(toLocalPath("/tmp/foo"));
     });
 
   });
