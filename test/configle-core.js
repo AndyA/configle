@@ -62,9 +62,7 @@ describe("Configle core", function() {
   });
 
   describe("config", function() {
-    var cf = new Configle({
-      smartStrings: false
-    });
+    var cf = new Configle();
 
     cf.addConfig({
       db: {
