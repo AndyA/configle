@@ -7,6 +7,12 @@ var expect = chai.expect;
 var ConfigData = require("../lib/config-data.js");
 var SmartString = require("../lib/smart-string.js");
 
+function toLocalPath(pathName) {
+  return pathName.split("/")
+    .join(require("path")
+      .sep);
+}
+
 describe("ConfigData", function() {
 
   var config = {
@@ -243,9 +249,9 @@ describe("ConfigData", function() {
       }, "/tmp");
       var expConfig = ConfigData.expandVars(smartConfig);
       expect(expConfig.tmpDir.toPathname())
-        .to.equal("/tmp");
+        .to.equal(toLocalPath("/tmp"));
       expect(expConfig.workDir.toPathname())
-        .to.equal("/tmp/work");
+        .to.equal(toLocalPath("/tmp/work"));
     });
 
   });

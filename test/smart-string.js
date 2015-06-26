@@ -6,6 +6,12 @@ var expect = chai.expect;
 
 var SmartString = require("../lib/smart-string.js");
 
+//function toLocalPath(pathName) {
+//  return pathName.split("/")
+//    .join(require("path")
+//      .sep);
+//}
+
 describe("SmartString", function() {
 
   describe("smarten", function() {
