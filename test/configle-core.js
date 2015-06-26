@@ -95,7 +95,8 @@ describe("Configle core", function() {
 
   describe("load", function() {
     var cfgRoot = path.join(__dirname, "data", "root");
-    var cfgStart = path.join(cfgRoot, "home", "me", "projects");
+    var cfgHome = path.join(cfgRoot, "home", "me");
+    var cfgStart = path.join(cfgHome, "projects");
 
     var cf = new Configle({
       startDir: cfgStart
@@ -125,8 +126,18 @@ describe("Configle core", function() {
             "home",
             "root local",
             "root"
-          ]
+          ],
+          "here": [".", ".", ".", ".", ".", "."]
         });
+    });
+
+    it("should resolve pathnames", function() {
+      expect(cf.getPathname("here"))
+        .to.deep.equal([
+          cfgStart, cfgStart,
+          cfgHome, cfgHome,
+          cfgRoot, cfgRoot
+        ]);
     });
 
   });

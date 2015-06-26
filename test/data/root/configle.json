@@ -1,4 +1,7 @@
 {
+   "here" : [
+      "."
+   ],
    "name" : "Root config",
    "sources" : [
       "root"

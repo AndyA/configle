@@ -1,4 +1,7 @@
 {
+   "here" : [
+      "."
+   ],
    "name" : "User default local config",
    "sources" : [
       "home local"

@@ -1,4 +1,7 @@
 {
+   "here" : [
+      "."
+   ],
    "name" : "Projects config",
    "sources" : [
       "projects"
