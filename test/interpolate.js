@@ -104,8 +104,6 @@ describe("interpolate", function() {
 
   describe("user defined functions", function() {
 
-    var isFunc = /^(\w+)$/;
-
     function userFuncs(expr, context) {
 
       if (context.func) {
