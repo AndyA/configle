@@ -6,15 +6,15 @@ var expect = chai.expect;
 
 var interpolate = require("../lib/interpolate.js");
 
+function makeResolver(dict) {
+  return function(key) {
+    return dict[key];
+  };
+}
 
 describe("interpolate", function() {
 
   describe("variable expansion", function() {
-    function makeResolver(dict) {
-      return function(key) {
-        return dict[key];
-      };
-    }
 
     var look = makeResolver({
       name: "Andy",
