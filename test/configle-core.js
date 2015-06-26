@@ -47,6 +47,8 @@ describe("Configle core", function() {
           expandVars: false,
           expandEnv: true,
           allowUndefined: false,
+          resolvers: [],
+          defaultResolvers: [],
           loaders: {
             json: JSON.parse
           }
@@ -89,6 +91,31 @@ describe("Configle core", function() {
           }
         });
     });
+  });
+
+  describe("functions", function() {
+    var cf = new Configle();
+
+    cf.addConfig({
+      inHomeMe: "home_me",
+      fromHomeYou: "Path: ${path:{inHomeYou}}"
+    }, "/home/me");
+
+    cf.addConfig({
+      inHomeYou: "home_you",
+      fromHomeMe: "Path: ${path:{inHomeMe}}"
+    }, "/home/you");
+
+    it("should evaluate the path function", function() {
+      expect(cf.get())
+        .to.deep.equal({
+          inHomeMe: "home_me",
+          fromHomeYou: "Path: /home/you/home_you",
+          inHomeYou: "home_you",
+          fromHomeMe: "Path: /home/me/home_me"
+        });
+    });
+
   });
 
   describe("load", function() {
