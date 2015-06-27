@@ -1,6 +1,11 @@
+baseDir: /opt/configle
+dbName: test
+dbUser: root
 here:
   - .
 name: 'Projects local config'
+paths:
+  share: '${baseDir}/share'
 sources:
   - 'projects local'
 vars:

@@ -144,19 +144,22 @@ describe("Configle core", function() {
       it("should load config", function() {
         expect(cf.load("configle.(local|)"))
           .to.deep.equal({
+            "baseDir": "/opt/configle",
+            "dbName": "test",
+            "dbUser": "root",
+            "here": [
+              ".",
+              ".",
+              ".",
+              ".",
+              ".",
+              "."
+            ],
             "name": "Projects local config",
-            "vars": {
-              "array": [],
-              "false": false,
-              "null": null,
-              "object": {
-                "false": false,
-                "null": null,
-                "pi": 3.1415,
-                "true": true
-              },
-              "pi": 3.1415,
-              "true": true
+            "paths": {
+              "share": "/opt/configle/share",
+              "include": "/opt/configle/include",
+              "lib": "/opt/configle/lib"
             },
             "sources": [
               "projects local",
@@ -166,7 +169,25 @@ describe("Configle core", function() {
               "root local",
               "root"
             ],
-            "here": [".", ".", ".", ".", ".", "."]
+            "vars": {
+              "array": [],
+              "object": {
+                "false": false,
+                "null": null,
+                "pi": 3.1415,
+                "true": true
+              },
+              "pi": 3.1415,
+              "null": null,
+              "true": true,
+              "false": false
+            },
+            "dbHost": "localhost",
+            "db": {
+              "live": "mysql://root@localhost/test",
+              "stage": "mysql://root@localhost/test-stage",
+              "test": "mysql://root@localhost/test-test"
+            }
           });
       });
 

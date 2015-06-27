@@ -1,4 +1,5 @@
 {
+   "baseDir" : "/usr/local",
    "here" : [
       "."
    ],

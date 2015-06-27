@@ -1,3 +1,4 @@
+baseDir: /usr/local
 here:
   - .
 name: 'Root local config'
