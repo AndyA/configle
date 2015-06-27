@@ -6,6 +6,7 @@ var expect = chai.expect;
 
 var ConfigData = require("../lib/config-data.js");
 var SmartString = require("../lib/smart-string.js");
+var errors = require("../lib/errors.js");
 
 function toLocalPath(pathName) {
   return pathName.split("/")
@@ -224,7 +225,7 @@ describe("ConfigData", function() {
             b: "${a}"
           });
         })
-        .to.throw(Error);
+        .to.throw(errors.ConfigleError);
     });
 
     it("should provide debug for circular refs", function() {
@@ -237,7 +238,7 @@ describe("ConfigData", function() {
             }
           });
         })
-        .to.throw(Error,
+        .to.throw(errors.ConfigleError,
           /circle\.[abc] -> circle\.[abc] -> circle\.[abc] -> circle\.[abc]/
         );
     });

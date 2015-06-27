@@ -6,6 +6,7 @@ chai.use(require("chai-subset"));
 var expect = chai.expect;
 
 var Configle = require("../lib/configle-core.js");
+var errors = require("../lib/errors.js");
 
 function toLocalPath(pathName) {
   return pathName.split("/")
@@ -65,7 +66,7 @@ describe("Configle core", function() {
       expect(function() {
           cf.options({});
         })
-        .to.throw(Error);
+        .to.throw(errors.ConfigleError);
     });
   });
 

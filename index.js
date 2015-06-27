@@ -3,6 +3,9 @@
 // Core
 var Configle = require("./lib/configle-core.js");
 
+// Errors
+Configle.errors = require("./lib/errors.js");
+
 // Classes
 Configle.ConfigData = require("./lib/config-data.js");
 Configle.MultiString = require("./lib/multi-string.js");
