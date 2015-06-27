@@ -1,0 +1,7 @@
+here:
+  - .
+name: 'Projects config'
+sources:
+  - projects
+vars:
+  object: {'false': false, 'null': null, pi: 3.1415, 'true': true}

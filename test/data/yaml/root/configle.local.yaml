@@ -1,0 +1,7 @@
+here:
+  - .
+name: 'Root local config'
+sources:
+  - 'root local'
+vars:
+  'true': true
