@@ -225,7 +225,7 @@ describe("ConfigData", function() {
             b: "${a}"
           });
         })
-        .to.throw(errors.ConfigleError);
+        .to.throw(errors.CircularReferenceError);
     });
 
     it("should provide debug for circular refs", function() {
@@ -238,7 +238,7 @@ describe("ConfigData", function() {
             }
           });
         })
-        .to.throw(errors.ConfigleError,
+        .to.throw(errors.CircularReferenceError,
           /circle\.[abc] -> circle\.[abc] -> circle\.[abc] -> circle\.[abc]/
         );
     });

@@ -66,7 +66,7 @@ describe("Configle core", function() {
       expect(function() {
           cf.options({});
         })
-        .to.throw(errors.ConfigleError);
+        .to.throw(errors.ConfigleCoreError);
     });
   });
 
