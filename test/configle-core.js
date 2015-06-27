@@ -142,7 +142,7 @@ describe("Configle core", function() {
       });
 
       it("should load config", function() {
-        expect(cf.load("configle.(local|)"))
+        expect(cf.load("configle.(local|)").get())
           .to.deep.equal({
             "baseDir": "/opt/configle",
             "dbName": "test",
