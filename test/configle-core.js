@@ -5,6 +5,8 @@ var chai = require("chai");
 chai.use(require("chai-subset"));
 var expect = chai.expect;
 
+var YAML = require("yamljs");
+
 var Configle = require("../lib/configle-core.js");
 var errors = require("../lib/errors.js");
 
@@ -57,7 +59,9 @@ describe("Configle core", function() {
           resolvers: [],
           defaultResolvers: [],
           loaders: {
-            json: JSON.parse
+            json: JSON.parse,
+            yml: YAML.parse,
+            yaml: YAML.parse
           }
         });
     });
@@ -127,53 +131,54 @@ describe("Configle core", function() {
 
   });
 
-  describe("load", function() {
-    var cfgRoot = path.join(__dirname, "data", "root");
-    var cfgHome = path.join(cfgRoot, "home", "me");
-    var cfgStart = path.join(cfgHome, "projects");
+  ["json", "yaml"].forEach(function(kind) {
+    describe("load " + kind, function() {
+      var cfgRoot = path.join(__dirname, "data", kind, "root");
+      var cfgHome = path.join(cfgRoot, "home", "me");
+      var cfgStart = path.join(cfgHome, "projects");
 
-    var cf = new Configle({
-      startDir: cfgStart
-    });
+      var cf = new Configle({
+        startDir: cfgStart
+      });
 
-    it("should load config", function() {
-      expect(cf.load("configle.(local|)"))
-        .to.deep.equal({
-          "name": "Projects local config",
-          "vars": {
-            "array": [],
-            "false": false,
-            "null": null,
-            "object": {
+      it("should load config", function() {
+        expect(cf.load("configle.(local|)"))
+          .to.deep.equal({
+            "name": "Projects local config",
+            "vars": {
+              "array": [],
               "false": false,
               "null": null,
+              "object": {
+                "false": false,
+                "null": null,
+                "pi": 3.1415,
+                "true": true
+              },
               "pi": 3.1415,
               "true": true
             },
-            "pi": 3.1415,
-            "true": true
-          },
-          "sources": [
-            "projects local",
-            "projects",
-            "home local",
-            "home",
-            "root local",
-            "root"
-          ],
-          "here": [".", ".", ".", ".", ".", "."]
-        });
-    });
+            "sources": [
+              "projects local",
+              "projects",
+              "home local",
+              "home",
+              "root local",
+              "root"
+            ],
+            "here": [".", ".", ".", ".", ".", "."]
+          });
+      });
 
-    it("should resolve pathnames", function() {
-      expect(cf.getPathname("here"))
-        .to.deep.equal([
-          cfgStart, cfgStart,
-          cfgHome, cfgHome,
-          cfgRoot, cfgRoot
-        ]);
+      it("should resolve pathnames", function() {
+        expect(cf.getPathname("here"))
+          .to.deep.equal([
+            cfgStart, cfgStart,
+            cfgHome, cfgHome,
+            cfgRoot, cfgRoot
+          ]);
+      });
     });
-
   });
 
 });
