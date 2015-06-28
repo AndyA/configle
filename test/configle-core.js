@@ -6,6 +6,7 @@ chai.use(require("chai-subset"));
 var expect = chai.expect;
 
 var YAML = require("yamljs");
+var CSON = require("cson");
 
 var Configle = require("../lib/configle-core.js");
 var errors = require("../lib/errors.js");
@@ -61,7 +62,8 @@ describe("Configle core", function() {
           loaders: {
             json: JSON.parse,
             yml: YAML.parse,
-            yaml: YAML.parse
+            yaml: YAML.parse,
+            cson: CSON.parse
           }
         });
     });

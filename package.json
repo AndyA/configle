@@ -5,6 +5,7 @@
    },
    "dependencies" : {
       "bluebird" : "^2.9.30",
+      "cson" : "^3.0.1",
       "path-parse" : "^1.0.5",
       "underscore" : "^1.8.3",
       "yamljs" : "^0.2.3"
