@@ -1,0 +1,17 @@
+dbHost: "localhost"
+here: [
+	"."
+]
+name: "Projects config"
+paths:
+	include: "${baseDir}/include"
+	lib: "${baseDir}/lib"
+sources: [
+	"projects"
+]
+vars:
+	object:
+		false: false
+		null: null
+		pi: 3.1415
+		true: true

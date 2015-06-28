@@ -5,9 +5,6 @@ var chai = require("chai");
 chai.use(require("chai-subset"));
 var expect = chai.expect;
 
-var YAML = require("yamljs");
-var CSON = require("cson");
-
 var Configle = require("../lib/configle-core.js");
 var errors = require("../lib/errors.js");
 
@@ -51,20 +48,16 @@ describe("Configle core", function() {
     });
 
     it("should have the right options", function() {
-      expect(cf.getOptions())
+      var opt = cf.getOptions();
+      delete opt.loaders;
+      expect(opt)
         .to.deep.equal({
           startDir: "/tmp",
           expandVars: false,
           expandEnv: true,
           allowUndefined: false,
           resolvers: [],
-          defaultResolvers: [],
-          loaders: {
-            json: JSON.parse,
-            yml: YAML.parse,
-            yaml: YAML.parse,
-            cson: CSON.parse
-          }
+          defaultResolvers: []
         });
     });
 
@@ -133,7 +126,7 @@ describe("Configle core", function() {
 
   });
 
-  ["json", "yaml"].forEach(function(kind) {
+  [/*"json", "yaml",*/ "cson"].forEach(function(kind) {
     describe("load " + kind, function() {
       var cfgRoot = path.join(__dirname, "data", kind, "root");
       var cfgHome = path.join(cfgRoot, "home", "me");

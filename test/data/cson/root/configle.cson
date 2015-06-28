@@ -1,0 +1,17 @@
+baseDir: "/usr"
+db:
+	live: "mysql://${dbUser}@${dbHost}/${dbName}"
+	stage: "mysql://${dbUser}@${dbHost}/${dbName}-stage"
+	test: "mysql://${dbUser}@${dbHost}/${dbName}-test"
+dbHost: "db000"
+dbName: "configle"
+dbUser: "configle"
+here: [
+	"."
+]
+name: "Root config"
+sources: [
+	"root"
+]
+vars:
+	false: false

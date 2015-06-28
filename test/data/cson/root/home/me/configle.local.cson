@@ -1,0 +1,9 @@
+here: [
+	"."
+]
+name: "User default local config"
+sources: [
+	"home local"
+]
+vars:
+	pi: 3.1415
