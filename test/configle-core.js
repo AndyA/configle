@@ -126,7 +126,7 @@ describe("Configle core", function() {
 
   });
 
-  [/*"json", "yaml",*/ "cson"].forEach(function(kind) {
+  ["json", "yaml", "cson"].forEach(function(kind) {
     describe("load " + kind, function() {
       var cfgRoot = path.join(__dirname, "data", kind, "root");
       var cfgHome = path.join(cfgRoot, "home", "me");
